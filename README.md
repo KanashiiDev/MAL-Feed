@@ -1,4 +1,6 @@
-# Mal Feed is a javascript activity feed project.
+# Mal Feed is a javascript activity feed project for MyAnimeList.
+
+<a href="https://github.com/KanashiiDev/MAL-Clean-JS/raw/main/mal-clean.user.js"><img src="https://shields.io/badge/Mal%20Feed%20Install%20Userscript-brightgreen" alt="Get Userscript"/></a><br>
 
 With Mal Feed, users will be able to add activities and reply to other users activities.
 
