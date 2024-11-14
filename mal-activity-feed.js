@@ -41,6 +41,9 @@ a.feed-main-button {
 .feed-main a:hover {
   text-decoration: none!important
 }
+#currently-popup iframe {
+  border: 0!important
+}
 `;
 let defaultColorsLight = `
 :root,
@@ -70,6 +73,9 @@ a.feed-main-button {
 }
 .feed-main a:hover {
   text-decoration: none!important
+}
+#currently-popup iframe {
+  border: 0!important
 }
 `;
 let MalCleanCSS = `
@@ -510,23 +516,18 @@ function delay(ms) {
 
 			$(popupIframe).on("load", function () {
 				let $iframeContents = $(popupIframe).contents();
-				$($iframeContents).find("div:not(#dialog *):not(#contentWrapper):not(#content):not(#myanimelist):not(.wrapper)").remove();
-				$($iframeContents).find("#dialog form div[style='margin-top: 6px;']").remove();
-				$($iframeContents).find("footer").remove();
-				$($iframeContents).find('html')[0].style.overflowX = 'hidden';
-				$($iframeContents).find('#content')[0].style.padding = '0';
-				$($iframeContents).find("#dialog")[0].setAttribute('style', 'margin:0;padding:0;width:100%');
-				$($iframeContents).find("#contentWrapper")[0].setAttribute('style',
-					'top: 0px!important;left: -5px;margin: 0!important;padding: 0!important;max-width: 675px!important;min-width: auto;min-height: auto;');
-				$($iframeContents).find("#myanimelist")[0].setAttribute('style', 'width: auto;padding: 0px 5px;');
-				$($iframeContents).contents().find("input[name='topic_title']").hide();
-				$($iframeContents).contents().find("#dialog > tbody > tr > td > form:nth-child(2) > strong").hide();
-				$($iframeContents).contents().find("#dialog > tbody > tr > td > form:nth-child(2) > div:nth-child(2)").hide();
-				$($iframeContents).contents().find("#dialog > tbody > tr > td > form:nth-child(2) > div > button.mal-btn.secondary.outline.btn-recaptcha-submit").hide();
-				$($iframeContents).find(".normal_header").html('Edit Activity');
-				$($iframeContents).contents().find("#pollView > a").hide();
-				$($iframeContents).contents().find("#pollInformation").hide();
-				$($iframeContents).find("#dialog form > br").remove();
+				$iframeContents.find("div:not(#dialog *):not(#contentWrapper):not(#content):not(#myanimelist):not(.wrapper)").remove();
+				$iframeContents.find("#dialog form div[style='margin-top: 6px;'], footer, #dialog form > br, #pollView > a, #pollInformation").remove();
+				$iframeContents.find('html')[0].style.overflowX = 'hidden';
+				$iframeContents.find('#content')[0].style.padding = '0';
+
+				$iframeContents.find("#dialog")[0].setAttribute('style', 'margin:0;padding:0;width:100%');
+				$iframeContents.find("#contentWrapper")[0].setAttribute('style',
+					'top: 0px!important;left: -5px;margin: 0!important;padding: 0!important;max-width: 675px!important;min-width: auto;min-height: auto;width: 675px !important;top: 0 !important;');
+				$iframeContents.find("#myanimelist")[0].setAttribute('style', 'width: auto;padding: 0px 5px;');
+				$iframeContents.find("input[name='topic_title'], #dialog > tbody > tr > td > form:nth-child(2) > strong, #dialog > tbody > tr > td > form:nth-child(2) > div:nth-child(2), " +
+					"#dialog > tbody > tr > td > form:nth-child(2) > div > button.mal-btn.secondary.outline.btn-recaptcha-submit").hide();
+				$iframeContents.find(".normal_header").html('Edit Activity');
 				function reloadReplies() {
 					const reloadInterval = setInterval(() => {
 						$iframeContents = $(popupIframe).contents();
@@ -580,7 +581,7 @@ function delay(ms) {
 			const singleActDiv = document.querySelector(".error404");
 			singleActDiv.innerHTML = '';
 			singleActDiv.title = '';
-      singleActDiv.style.padding = '0';
+			singleActDiv.style.padding = '0';
 			singleActDiv.parentElement.parentElement.style.minHeight = '0';
 			document.querySelector("#contentWrapper > div:nth-child(1) > h1").innerText = "Activity";
 			document.title = "Activity - MyAnimeList";
@@ -726,34 +727,29 @@ function delay(ms) {
 				if (postToggleStatus && !$iframeContents.find(".goodresult").length && !$iframeContents.find(".badresult").length && !$iframeContents.find('.forum-topic-message[id^="msg"]').length) {
 					postIframe.style.opacity = 1;
 					postIframeLoading.remove();
-					$($iframeContents).find(".normal_header").html('Post New Activity');
-					$($iframeContents).find("div:not(#dialog *):not(#contentWrapper):not(#content):not(#myanimelist):not(.wrapper)").remove();
-					$($iframeContents).contents().find("#dialog div.mal-btn-toolbar > button:nth-child(4)").remove();
-					$($iframeContents).contents().find("#dialog div.mal-btn-toolbar > button:nth-child(3)").remove();
-					$($iframeContents).find("#dialog form div[style='margin-top: 6px;']").remove();
-					$($iframeContents).find("#dialog #mass-message").remove();
-					$($iframeContents).find("#dialog form > br").remove();
-					$($iframeContents).find("footer").remove();
-					$($iframeContents).find('html')[0].style.overflowX = 'hidden';
-					$($iframeContents).find('#content')[0].style.padding = '0';
-					$($iframeContents).find("#dialog")[0]?.setAttribute('style', 'margin:0;padding:0;width:100%');
-					$($iframeContents).find("#contentWrapper")[0].setAttribute('style',
-						'top: 0px!important;left: -5px;margin: 0!important;padding: 0!important;max-width: 730px!important;min-width: auto;min-height: auto;');
-					$($iframeContents).find("#myanimelist")[0].setAttribute('style', 'width: auto;padding: 0px 5px;');
-					$($iframeContents).contents().find("#topicTitle > input")[0].value = "Acivity Feed";
-					$($iframeContents).contents().find("#topicTitle").hide();
-					$($iframeContents).contents().find("#pollView > a")[0].click();
-					$($iframeContents).contents().find("#pollView > a").hide();
+					$iframeContents.find(".normal_header").html('Post New Activity');
+					$iframeContents.find("div:not(#dialog *):not(#contentWrapper):not(#content):not(#myanimelist):not(.wrapper)").remove();
+					$iframeContents.find("#dialog div.mal-btn-toolbar > button:nth-child(4), #dialog div.mal-btn-toolbar > button:nth-child(3)").remove();
+					$iframeContents.find("#dialog form div[style='margin-top: 6px;'], #dialog #mass-message, #dialog form > br, footer").remove();
+					$iframeContents.find('html')[0].style.overflowX = 'hidden';
+					$iframeContents.find('#content').css({ padding: '0', marginLeft: '10px' });
+					$iframeContents.find("#dialog").css({ margin: 0, padding: 0, width: '100%' });
+					$iframeContents.find("#contentWrapper").css({ top: '0px', left: '-5px', margin: 0, padding: 0, 'max-width': '730px', 'min-width': 'auto', 'min-height': 'auto' });
+					$iframeContents.find("#contentWrapper")[0].style.setProperty('width', '720px', 'important');
+					$iframeContents.find("#myanimelist").css({ width: 'auto', padding: '0px 5px' });
+					$iframeContents.find("#topicTitle > input").val("Activity Feed");
+					$iframeContents.find("#topicTitle").hide();
+					$iframeContents.find("#pollView > a")[0].click();
+					$iframeContents.find("#pollView > a").hide();
 					await delay(200);
-					$($iframeContents).contents().find("#pollInformation").hide();
-					$($iframeContents).contents().find("#pollInformation > div > input")[0].value = "Liked";
-					$($iframeContents).contents().find("#pollDiv > div > input")[0].value = "Yes";
+					$iframeContents.find("#pollInformation").hide();
+					$iframeContents.find("#pollInformation input[name='pollQuestion']")[0].value = "Liked";
+					$iframeContents.find("#pollDiv > div > input")[0].value = "Yes";
 					$iframeContents.find("#dialog div.mal-btn-toolbar > button:nth-child(2)").on("click", function () {
 						postIframe.style.display = "none";
 						ActivityPostDiv.prepend(postIframeLoading);
 					});
 				}
-
 			});
 		});
 		ActivityPostDiv.appendChild(postIframe);
@@ -1010,7 +1006,7 @@ function delay(ms) {
 		const messageDate = create("div", { class: 'feed-message-date' });
 		let dateString = message.querySelector(".message-header .date")?.innerText;
 		let dateData = message.querySelector(".message-header .date")?.getAttribute('data-time');
-		let datenew = dateString.includes("Today") || dateString.includes("hour") || dateString.includes("minutes") || dateString.includes("seconds") ? true : false;
+		let datenew = dateString.includes("hour") || dateString.includes("minutes") || dateString.includes("seconds") ? true : false;
 		messageDate.innerText = datenew ? dateString : nativeTimeElement(dateData);
 		messageDate.title = dateString;
 		profileDetails.append(profileName, messageDate);
@@ -1210,19 +1206,22 @@ function delay(ms) {
 			if (replyIframeToggle && !$iframeContents.find(".goodresult")[0] && !$iframeContents.find(".badresult")[0]) {
 				replyIframeLoading.remove();
 				replyIframe.style.display = 'block';
-				$($iframeContents).find("#content > div.forum.timeline > .topic-reply-container > .topic-reply-bar> div.mal-btn-toolbar.left > button")[0].click();
-				$($iframeContents).find("div:not(#contentWrapper):not(#content):not(#myanimelist):not(.wrapper):not(.topic-reply-container):not(.topic-reply-container *):not(.forum.timeline):not(.forum.thread):not(.message)").hide();
-				$($iframeContents).find("#content > div.forum.timeline > div.topic-reply-container").last().remove();
-				$($iframeContents).find("#content > div.forum.timeline > div.topic-reply-container > div.mal-navbar.topic-reply-bar").remove();
-				$($iframeContents).find("#content > div.forum.timeline > div.topic-reply-container > div.topic-reply-box.fixed > div.mal-navbar > div > button.mal-btn.secondary.outline.js-reply-cancel").remove();
-				$($iframeContents).find("#content > div.forum.timeline > table.forum-topics").remove();
-				$($iframeContents).find("footer").remove();
-				$($iframeContents).find('html')[0].style.overflowX = 'hidden';
-				$($iframeContents).find('#content')[0].style.padding = '0';
-				$($iframeContents).find("#contentWrapper")[0].setAttribute('style',
-					'top: 0px!important;left: -5px;margin: 0!important;padding: 0!important;max-width: 730px!important;min-width: auto;min-height: auto;');
-				$($iframeContents).find("#myanimelist")[0].setAttribute('style', 'width: auto;padding: 0px 5px;');
-				$($iframeContents).find(".topic-reply-container")[0].setAttribute('style', 'width: 699px;margin-left: 5px;');
+				$iframeContents.find("#content > div.forum.timeline > .topic-reply-container > .topic-reply-bar> div.mal-btn-toolbar.left > button")[0].click();
+				$iframeContents.find("div:not(#contentWrapper):not(#content):not(#myanimelist):not(.wrapper):not(.topic-reply-container):not(.topic-reply-container *):not(.forum.timeline):not(.forum.thread):not(.message)").hide();
+				$iframeContents.find("#content > div.forum.timeline > div.topic-reply-container").last().remove();
+				$iframeContents.find("#content > div.forum.timeline > div.topic-reply-container > div.topic-reply-box.fixed > div.mal-navbar > div > button.mal-btn.secondary.outline.js-reply-cancel").remove();
+				$iframeContents.find("#content > div.forum.timeline > div.topic-reply-container > div.mal-navbar.topic-reply-bar, #content > div.forum.timeline > table.forum-topics, footer").remove();
+				$iframeContents.find('html')[0].style.overflowX = 'hidden';
+				$iframeContents.find('#content').css({ padding: '0', border: '0' });
+				$iframeContents.find("#contentWrapper").css({ top: '0px', left: '-5px', margin: 0, padding: 0, 'min-width': 'auto', 'min-height': 'auto' });
+				$iframeContents.find("#myanimelist").css({ padding: '0px 5px' });
+				$iframeContents.find("#contentWrapper")[0].style.setProperty('width', 'auto', 'important');
+				if (location.pathname.includes('activity')) {
+					$iframeContents.find(".topic-reply-container").css({ width: '1010px', 'margin-left': '5px' });
+				} else {
+					$iframeContents.find(".topic-reply-container").css({ width: '720px', 'margin-left': '5px' });
+				}
+
 			}
 			$($iframeContents).find('.topic-reply-container button:contains("Reply")').on("click", function () {
 				reloadReplies();
@@ -1295,7 +1294,7 @@ function delay(ms) {
 				const messageId = message.id;
 				const messageDiv = createMessage(message);
 				const profileDate = message.created.timestamp.ago;
-				const datenew = profileDate.includes("Today") || profileDate.includes("hour") || profileDate.includes("minutes") || profileDate.includes("seconds") ? true : false;
+				const datenew = profileDate.includes("hour") || profileDate.includes("minutes") || profileDate.includes("seconds") ? true : false;
 				const profileTimestamp = datenew ? profileDate : nativeTimeElement(message.created.timestamp.time);
 				const messageDate = create("div", { class: 'feed-message-date' }, profileTimestamp);
 				messageDate.title = message.created.timestamp.date;
